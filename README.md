@@ -77,3 +77,10 @@ Because the kitchen hasn't finished preparing the new length yet, generatePass()
   
 ## External Systems: Use useEffect to touch the DOM, fetch APIs, or set timers.
 ## Chain Reactions: Use useEffect when a change in one piece of State requires a complex, heavy recalculation of another piece of State (like generating a random password).
+
+# stateFunctions are created only once
+  
+# If a function is ONLY used inside a useEffect, you shouldn't use useCallback at all. You should just put the function INSIDE the useEffect!
+
+# useCallback is a hook used when we have to reduce the function overhead 
+

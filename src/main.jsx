@@ -1,5 +1,5 @@
 import {createRoot} from 'react-dom/client';
-import { useState ,useEffect, use} from 'react';
+import { useState ,useEffect} from 'react';
 
 function Main(){
     const [pass,setpass]=useState("");
@@ -7,32 +7,34 @@ function Main(){
     const [number,setnumber]=useState(false);
     const [char,setchar]=useState(false);
 
+    useEffect(()=>{
+        
+        //here this is like a closure
+        function generatePass(){
+            let s="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if(number){
+                s+="1234567890";
+            }
+            if(char){
+                s+="!@#$%^&*()_+><?:~`";
+            }
 
-    function generatePass(){
-        let s="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        if(number){
-            s+="1234567890";
-        }
-        if(char){
-            s+="!@#$%^&*()_+><?:~`";
-        }
+            let passw="";
 
-        let passw="";
+            for(let i=0;i<length;i++){
+                passw+=s[Math.floor(Math.random()*(s.length))];
+            }
 
-        for(let i=0;i<length;i++){
-            passw+=s[Math.floor(Math.random()*(s.length))];
-        }
-
-        setpass(passw);
-    };
-
-    useEffect(generatePass,[length,number,char]);
+            setpass(passw);
+        };
+        generatePass();
+    },[length,number,char]);
 
     return (
         <>
         <h1>{pass}</h1>
         <div>
-            <input type="range" min="5" max="50" value={length} onChange={(e)=>{let val=e.target.value;setlength(val);generatePass();}}/>
+            <input type="range" min="5" max="50" value={length} onChange={(e)=>{let val=e.target.value;setlength(val);}}/>
             <span>Length({length})</span>
 
             <input type="checkbox" checked={number} onChange={()=>{setnumber(!number);}}/>
